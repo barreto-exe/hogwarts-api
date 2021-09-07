@@ -5,17 +5,14 @@ using System.Collections.Generic;
 
 namespace hogwarts_core.Entities
 {
-    public partial class Person
+    public partial class House
     {
-        public Person()
+        public House()
         {
             Applications = new HashSet<Application>();
         }
 
-        public string PersonId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int Age { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Application> Applications { get; set; }
     }

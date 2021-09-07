@@ -1,17 +1,12 @@
 using hogwarts_core.Interfaces;
+using hogwarts_infrastructure.Data;
 using hogwarts_infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace hogwarts_api
 {
@@ -28,6 +23,8 @@ namespace hogwarts_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<HogwartsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HogwartsPgsql")));
 
             services.AddTransient<IPersonRepository, PersonRepository>();
         }

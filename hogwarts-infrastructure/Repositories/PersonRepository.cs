@@ -1,5 +1,7 @@
 ﻿using hogwarts_core.Entities;
 using hogwarts_core.Interfaces;
+using hogwarts_infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +12,16 @@ namespace hogwarts_infrastructure.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
+        private readonly HogwartsContext hogwartsContext;
+
+        public PersonRepository(HogwartsContext hogwartsContext)
+        {
+            this.hogwartsContext = hogwartsContext;
+        }
+
         public async Task<IEnumerable<Person>> GetPeople()
         {
-            var ppl = Enumerable.Range(1, 10).Select(i => new Person()
-            {
-                Id = i,
-                FirstName = $"Nombre {i}",
-                LastName = $"Apellido {i}",
-                Age = i + 20,
-            });
-
-            await Task.Delay(10);
-
-            return ppl;
+            return await hogwartsContext.People.ToListAsync();
         }
     }
 }
