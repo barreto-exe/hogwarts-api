@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hogwarts-api", "hogwarts-api\hogwarts-api.csproj", "{3E8017DA-0AC9-41EA-8B28-8F97068DB014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hogwarts-core", "hogwarts-core\hogwarts-core.csproj", "{967F7944-D4B9-47C7-8181-C2B94772597F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hogwarts-infrastructure", "hogwarts-infrastructure\hogwarts-infrastructure.csproj", "{C8101935-6C46-4E66-8D84-EB689494AA20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E8017DA-0AC9-41EA-8B28-8F97068DB014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8017DA-0AC9-41EA-8B28-8F97068DB014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8017DA-0AC9-41EA-8B28-8F97068DB014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8017DA-0AC9-41EA-8B28-8F97068DB014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{967F7944-D4B9-47C7-8181-C2B94772597F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{967F7944-D4B9-47C7-8181-C2B94772597F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{967F7944-D4B9-47C7-8181-C2B94772597F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{967F7944-D4B9-47C7-8181-C2B94772597F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8101935-6C46-4E66-8D84-EB689494AA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8101935-6C46-4E66-8D84-EB689494AA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8101935-6C46-4E66-8D84-EB689494AA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8101935-6C46-4E66-8D84-EB689494AA20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6FBA9B3-D858-4E5D-87AA-46EE26575799}
+	EndGlobalSection
+EndGlobal
