@@ -1,4 +1,5 @@
-﻿using hogwarts_infrastructure.Repositories;
+﻿using hogwarts_core.Interfaces;
+using hogwarts_infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,10 +13,17 @@ namespace hogwarts_api.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetPeople()
+        private readonly IPersonRepository personRepository;
+
+        public PersonController(IPersonRepository repository)
         {
-            var people = new PersonRepository().GetPeople();
+            personRepository = repository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPeople()
+        {
+            var people = await personRepository.GetPeople();
             return Ok(people);
         }
     }
