@@ -9,5 +9,6 @@ namespace hogwarts_core.Interfaces
     public interface IPersonRepository
     {
         public Task<IEnumerable<Person>> GetPeople();
+        public Task<Person> GetPerson(string id);
     }
 }

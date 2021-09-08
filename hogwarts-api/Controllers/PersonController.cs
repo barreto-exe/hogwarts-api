@@ -26,5 +26,12 @@ namespace hogwarts_api.Controllers
             var people = await personRepository.GetPeople();
             return Ok(people);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPerson(string id)
+        {
+            var person = await personRepository.GetPerson(id);
+            return Ok(person);
+        }
     }
 }

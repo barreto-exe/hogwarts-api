@@ -23,5 +23,10 @@ namespace hogwarts_infrastructure.Repositories
         {
             return await hogwartsContext.People.ToListAsync();
         }
+
+        public async Task<Person> GetPerson(string id)
+        {
+            return await hogwartsContext.People.FirstOrDefaultAsync(x => x.PersonId == id);
+        }
     }
 }
