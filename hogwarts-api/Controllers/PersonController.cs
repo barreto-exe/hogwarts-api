@@ -1,4 +1,5 @@
-﻿using hogwarts_core.Interfaces;
+﻿using hogwarts_core.Entities;
+using hogwarts_core.Interfaces;
 using hogwarts_infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,13 @@ namespace hogwarts_api.Controllers
         {
             var person = await personRepository.GetPerson(id);
             return Ok(person);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertPerson(Person person)
+        {
+            await personRepository.InsertPerson(person);
+            return Ok();
         }
     }
 }

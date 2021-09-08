@@ -28,5 +28,11 @@ namespace hogwarts_infrastructure.Repositories
         {
             return await hogwartsContext.People.FirstOrDefaultAsync(x => x.PersonId == id);
         }
+
+        public async Task InsertPerson(Person person)
+        {
+            hogwartsContext.People.Add(person);
+            await hogwartsContext.SaveChangesAsync();
+        }
     }
 }

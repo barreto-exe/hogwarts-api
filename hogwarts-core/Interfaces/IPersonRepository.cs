@@ -10,5 +10,6 @@ namespace hogwarts_core.Interfaces
     {
         public Task<IEnumerable<Person>> GetPeople();
         public Task<Person> GetPerson(string id);
+        public Task InsertPerson(Person person);
     }
 }
