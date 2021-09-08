@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace hogwarts_api
 {
@@ -24,11 +25,16 @@ namespace hogwarts_api
         {
             services.AddControllers();
 
+            //Registrar los mapeos de DTOs
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //Contexto de BD
             services.AddDbContext<HogwartsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HogwartsPgsql")));
 
+            //Servicios de repositorios
             services.AddTransient<IPersonRepository, PersonRepository>();
-
             services.AddTransient<IHouseRepository, HouseRepository>();
+            services.AddTransient<IApplicationRepository, ApplicationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

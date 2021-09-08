@@ -1,4 +1,6 @@
-﻿using hogwarts_core.Entities;
+﻿using AutoMapper;
+using hogwarts_core.DTOs;
+using hogwarts_core.Entities;
 using hogwarts_core.Interfaces;
 using hogwarts_infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -15,24 +17,29 @@ namespace hogwarts_api.Controllers
     public class HouseController : ControllerBase
     {
         private readonly IHouseRepository houseRepository;
+        private readonly IMapper mapper;
 
-        public HouseController(IHouseRepository repository)
+        public HouseController(IHouseRepository houseRepository, IMapper mapper)
         {
-            houseRepository = repository;
+            this.houseRepository = houseRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetHouses()
         {
-            var house = await houseRepository.GetHouses();
-            return Ok(house);
+            var houses = await houseRepository.GetHouses();
+            var housesDto = mapper.Map<IEnumerable<HouseDto>>(houses);
+            return Ok(housesDto);
         }
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetHouse(string name)
         {
             var house = await houseRepository.GetHouse(name);
-            return Ok(house);
+            var houseDto = mapper.Map<HouseDto>(house);
+
+            return Ok(houseDto);
         }
     }
 }

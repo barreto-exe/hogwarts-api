@@ -1,4 +1,6 @@
-﻿using hogwarts_core.Entities;
+﻿using AutoMapper;
+using hogwarts_core.DTOs;
+using hogwarts_core.Entities;
 using hogwarts_core.Interfaces;
 using hogwarts_infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -15,30 +17,38 @@ namespace hogwarts_api.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonRepository personRepository;
+        private readonly IMapper mapper;
 
-        public PersonController(IPersonRepository repository)
+        public PersonController(IPersonRepository personRepository, IMapper mapper)
         {
-            personRepository = repository;
+            this.personRepository = personRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetPeople()
         {
             var people = await personRepository.GetPeople();
-            return Ok(people);
+            var peopleDto = mapper.Map<IEnumerable<PersonDto>>(people);
+
+            return Ok(peopleDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPerson(string id)
         {
             var person = await personRepository.GetPerson(id);
-            return Ok(person);
+            var personDto = mapper.Map<PersonDto>(person);
+
+            return Ok(personDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertPerson(Person person)
+        public async Task<IActionResult> InsertPerson(PersonDto personDto)
         {
+            var person = mapper.Map<Person>(personDto);
             await personRepository.InsertPerson(person);
+
             return Ok();
         }
     }
