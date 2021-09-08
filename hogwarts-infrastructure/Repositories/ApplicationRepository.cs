@@ -34,5 +34,26 @@ namespace hogwarts_infrastructure.Repositories
             hogwartsContext.Applications.Add(application);
             await hogwartsContext.SaveChangesAsync();
         }
+
+        public async Task<bool> UpdateApplication(Application application)
+        {
+            var currentApplication = await GetApplication(application.ApplicationId);
+
+            currentApplication.PersonId = application.PersonId;
+            currentApplication.AspiredHouse = application.AspiredHouse;
+
+            int rows = await hogwartsContext.SaveChangesAsync();
+            return rows > 0;
+        }
+
+        public async Task<bool> DeleteApplication(int id)
+        {
+            var currentApplication = await GetApplication(id);
+
+            hogwartsContext.Applications.Remove(currentApplication);
+
+            int rows = await hogwartsContext.SaveChangesAsync();
+            return rows > 0;
+        }
     }
 }

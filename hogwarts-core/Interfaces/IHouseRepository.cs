@@ -10,5 +10,7 @@ namespace hogwarts_core.Interfaces
     {
         public Task<IEnumerable<House>> GetHouses();
         public Task<House> GetHouse(string house);
+        public Task<bool> UpdateHouse(House house);
+        public Task<bool> DeleteHouse(string name);
     }
 }

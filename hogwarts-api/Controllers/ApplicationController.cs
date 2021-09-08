@@ -43,7 +43,7 @@ namespace hogwarts_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertPerson(ApplicationDto applicationDto)
+        public async Task<IActionResult> InsertApplication(ApplicationDto applicationDto)
         {
             var application = mapper.Map<Application>(applicationDto);
             await applicationRepository.InsertApplication(application);

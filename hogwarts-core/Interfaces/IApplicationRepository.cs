@@ -11,5 +11,7 @@ namespace hogwarts_core.Interfaces
         public Task<IEnumerable<Application>> GetApplications();
         public Task<Application> GetApplication(int id);
         public Task InsertApplication(Application application);
+        public Task<bool> UpdateApplication(Application application);
+        public Task<bool> DeleteApplication(int id);
     }
 }

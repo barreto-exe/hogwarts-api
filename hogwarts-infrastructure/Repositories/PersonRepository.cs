@@ -29,10 +29,34 @@ namespace hogwarts_infrastructure.Repositories
             return await hogwartsContext.People.FirstOrDefaultAsync(x => x.PersonId == id);
         }
 
-        public async Task InsertPerson(Person person)
+        public async Task<bool> InsertPerson(Person person)
         {
             hogwartsContext.People.Add(person);
-            await hogwartsContext.SaveChangesAsync();
+            var result = await hogwartsContext.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<bool> UpdatePerson(Person person)
+        {
+            var currentPerson = await GetPerson(person.PersonId);
+            if (currentPerson == null) return false;
+
+            currentPerson.FirstName = person.FirstName;
+            currentPerson.LastName = person.LastName;
+            currentPerson.Age = person.Age;
+
+            int rows = await hogwartsContext.SaveChangesAsync();
+            return rows > 0;
+        }
+
+        public async Task<bool> DeletePerson(string id)
+        {
+            var currentPerson = await GetPerson(id);
+
+            hogwartsContext.People.Remove(currentPerson);
+
+            int rows = await hogwartsContext.SaveChangesAsync();
+            return rows > 0;
         }
     }
 }

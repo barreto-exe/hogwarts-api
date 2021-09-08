@@ -1,3 +1,4 @@
+using hogwarts_api.Responses;
 using hogwarts_core.Interfaces;
 using hogwarts_infrastructure.Data;
 using hogwarts_infrastructure.Repositories;
@@ -35,6 +36,7 @@ namespace hogwarts_api
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IHouseRepository, HouseRepository>();
             services.AddTransient<IApplicationRepository, ApplicationRepository>();
+            services.AddTransient<ApiResponse>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

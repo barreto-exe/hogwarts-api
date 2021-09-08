@@ -5,8 +5,4 @@
     <RootNamespace>hogwarts_core</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Enumerations\" />
-  </ItemGroup>
-
 </Project>

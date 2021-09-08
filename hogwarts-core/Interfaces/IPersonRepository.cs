@@ -10,6 +10,8 @@ namespace hogwarts_core.Interfaces
     {
         public Task<IEnumerable<Person>> GetPeople();
         public Task<Person> GetPerson(string id);
-        public Task InsertPerson(Person person);
+        public Task<bool> InsertPerson(Person person);
+        public Task<bool> UpdatePerson(Person person);
+        public Task<bool> DeletePerson(string id);
     }
 }
