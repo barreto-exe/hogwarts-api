@@ -10,6 +10,7 @@ namespace hogwarts_core.DTOs
     {
         [Required]
         [StringLength(10)]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Sólo se aceptan dígitos.")]
         public string PersonId { get; set; }
 
         [Required]
@@ -21,7 +22,7 @@ namespace hogwarts_core.DTOs
         public string LastName { get; set; }
 
         [Required]
-        [Range(18,99)]
+        [Range(18, 99)]
         public int Age { get; set; }
     }
 }

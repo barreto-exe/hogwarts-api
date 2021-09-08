@@ -52,6 +52,7 @@ namespace hogwarts_infrastructure.Repositories
         public async Task<bool> DeletePerson(string id)
         {
             var currentPerson = await GetPerson(id);
+            if (currentPerson == null) return false;
 
             hogwartsContext.People.Remove(currentPerson);
 

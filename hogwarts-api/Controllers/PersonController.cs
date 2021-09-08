@@ -42,7 +42,7 @@ namespace hogwarts_api.Controllers
         public async Task<IActionResult> GetPerson(string id)
         {
             var person = await personRepository.GetPerson(id);
-            if(person == null)
+            if (person == null)
             {
                 response.Message = "La persona no fue encontrada.";
                 return BadRequest(response);
@@ -63,7 +63,7 @@ namespace hogwarts_api.Controllers
             {
                 await personRepository.InsertPerson(person);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Data = false;
                 response.Message = "Inserción fallida. " + ex.InnerException.Message;
@@ -79,7 +79,7 @@ namespace hogwarts_api.Controllers
         public async Task<IActionResult> UpdatePerson(string id, PersonDto personDto)
         {
             var person = mapper.Map<Person>(personDto);
-            person.PersonId = id;
+            person.PersonId = id; //Forzar que Dto tenga el mismo id
             try
             {
                 bool updated = await personRepository.UpdatePerson(person);
@@ -94,7 +94,7 @@ namespace hogwarts_api.Controllers
                 }
                 else
                 {
-                    message = "Actualización fallida. El id no existe.";
+                    message = "Actualización fallida. No hubo cambios, o el id no existe.";
                     httpResult = BadRequest(response);
                 }
 
@@ -115,7 +115,24 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                response.Data = await personRepository.DeletePerson(id);
+                bool deleted = await personRepository.DeletePerson(id);
+                string message;
+                dynamic httpResult; //Variable de respuesta http
+
+                if (deleted)
+                {
+                    message = "Borrado completado.";
+                    httpResult = Ok(response);
+                }
+                else
+                {
+                    message = "Borrado fallido. El id no existe.";
+                    httpResult = BadRequest(response);
+                }
+
+                response.Message = message;
+                response.Data = deleted;
+                return httpResult;
             }
             catch (Exception ex)
             {
@@ -123,10 +140,6 @@ namespace hogwarts_api.Controllers
                 response.Message = "Borrado fallido. " + ex.InnerException.Message;
                 return BadRequest(response);
             }
-
-            response.Data = true;
-            response.Message = "Borrado completado.";
-            return Ok(response);
         }
     }
 }

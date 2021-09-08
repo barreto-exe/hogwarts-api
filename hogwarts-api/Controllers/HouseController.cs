@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using hogwarts_api.Responses;
 using hogwarts_core.DTOs;
 using hogwarts_core.Entities;
 using hogwarts_core.Interfaces;
@@ -18,11 +19,13 @@ namespace hogwarts_api.Controllers
     {
         private readonly IHouseRepository houseRepository;
         private readonly IMapper mapper;
+        private readonly ApiResponse response;
 
-        public HouseController(IHouseRepository houseRepository, IMapper mapper)
+        public HouseController(IHouseRepository houseRepository, IMapper mapper, ApiResponse response)
         {
             this.houseRepository = houseRepository;
             this.mapper = mapper;
+            this.response = response;
         }
 
         [HttpGet]
@@ -40,6 +43,58 @@ namespace hogwarts_api.Controllers
             var houseDto = mapper.Map<HouseDto>(house);
 
             return Ok(houseDto);
+        }
+
+        public async Task<IActionResult> InsertHouse(HouseDto houseDto)
+        {
+            var house = mapper.Map<House>(houseDto);
+
+            try
+            {
+                await houseRepository.InsertHouse(house);
+            }
+            catch (Exception ex)
+            {
+                response.Data = false;
+                response.Message = "Inserción fallida. " + ex.InnerException.Message;
+                return BadRequest(response);
+            }
+
+            response.Data = true;
+            response.Message = "Inserción completada.";
+            return Ok(response);
+        }
+
+        [HttpDelete("{name}")]
+        public async Task<IActionResult> DeleteHouse(string name)
+        {
+            try
+            {
+                bool deleted = await houseRepository.DeleteHouse(name);
+                string message;
+                dynamic httpResult; //Variable de respuesta http
+
+                if (deleted)
+                {
+                    message = "Borrado completado.";
+                    httpResult = Ok(response);
+                }
+                else
+                {
+                    message = "Borrado fallido. El id no existe.";
+                    httpResult = BadRequest(response);
+                }
+
+                response.Message = message;
+                response.Data = deleted;
+                return httpResult;
+            }
+            catch (Exception ex)
+            {
+                response.Data = false;
+                response.Message = "Borrado fallido. " + ex.InnerException.Message;
+                return BadRequest(response);
+            }
         }
     }
 }

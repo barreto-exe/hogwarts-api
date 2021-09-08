@@ -28,19 +28,17 @@ namespace hogwarts_infrastructure.Repositories
             return await hogwartsContext.Houses.ToListAsync();
         }
 
-        public async Task<bool> UpdateHouse(House house)
+        public async Task<bool> InsertHouse(House house)
         {
-            var currentHouse = await GetHouse(house.Name);
-
-            currentHouse.Name = house.Name;
-
-            int rows = await hogwartsContext.SaveChangesAsync();
-            return rows > 0;
+            hogwartsContext.Houses.Add(house);
+            var result = await hogwartsContext.SaveChangesAsync();
+            return result > 0;
         }
 
         public async Task<bool> DeleteHouse(string name)
         {
             var currentHouse = await GetHouse(name);
+            if (currentHouse == null) return false;
 
             hogwartsContext.Houses.Remove(currentHouse);
 

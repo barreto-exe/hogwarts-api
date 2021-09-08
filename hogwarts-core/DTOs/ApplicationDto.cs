@@ -12,6 +12,7 @@ namespace hogwarts_core.DTOs
 
         [Required]
         [StringLength(10)]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Sólo se aceptan dígitos.")]
         public string PersonId { get; set; }
 
         [Required]

@@ -29,15 +29,17 @@ namespace hogwarts_infrastructure.Repositories
             return await hogwartsContext.Applications.ToListAsync();
         }
 
-        public async Task InsertApplication(Application application)
+        public async Task<bool> InsertApplication(Application application)
         {
             hogwartsContext.Applications.Add(application);
-            await hogwartsContext.SaveChangesAsync();
+            var result = await hogwartsContext.SaveChangesAsync();
+            return result > 0;
         }
 
         public async Task<bool> UpdateApplication(Application application)
         {
             var currentApplication = await GetApplication(application.ApplicationId);
+            if (currentApplication == null) return false;
 
             currentApplication.PersonId = application.PersonId;
             currentApplication.AspiredHouse = application.AspiredHouse;
@@ -49,6 +51,7 @@ namespace hogwarts_infrastructure.Repositories
         public async Task<bool> DeleteApplication(int id)
         {
             var currentApplication = await GetApplication(id);
+            if (currentApplication == null) return false;
 
             hogwartsContext.Applications.Remove(currentApplication);
 
