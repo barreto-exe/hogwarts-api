@@ -27,6 +27,8 @@ namespace hogwarts_api
             services.AddDbContext<HogwartsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HogwartsPgsql")));
 
             services.AddTransient<IPersonRepository, PersonRepository>();
+
+            services.AddTransient<IHouseRepository, HouseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
