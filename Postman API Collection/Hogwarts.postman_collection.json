@@ -1,0 +1,704 @@
+{
+	"info": {
+		"_postman_id": "e8a943c8-3854-4e7a-a8e3-bc2ad2f090f0",
+		"name": "Hogwarts",
+		"description": "API del sistema de inscripciones para el Colegio de Magia y Hechicería Hogwarts.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Person",
+			"item": [
+				{
+					"name": "Create person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"personId\": \"0123456789\",\r\n        \"firstName\": \"Nombre\",\r\n        \"lastName\": \"Apellido\",\r\n        \"age\": 30\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/person",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"person"
+							]
+						},
+						"description": "Enviar datos de una persona.\n- Identificación (Solo números, máximo 10 dígitos)\n- Nombre (Solo letras, máximo 20 caracteres)\n- Apellido (Solo letras, máximo 20 caracteres)\n- Edad (Solo números, máximo 2 dígitos)"
+					},
+					"response": []
+				},
+				{
+					"name": "Read people",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/person",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"person"
+							]
+						},
+						"description": "Obtener listado de todas las personas."
+					},
+					"response": []
+				},
+				{
+					"name": "Read person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/person/0123456789",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"person",
+								"0123456789"
+							]
+						},
+						"description": "Obtener persona por su id."
+					},
+					"response": []
+				},
+				{
+					"name": "Update person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"personId\": \"0123456789\",\r\n    \"firstName\": \"Persona\",\r\n    \"lastName\": \"Modificada\",\r\n    \"age\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/person/0123456789",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"person",
+								"0123456789"
+							]
+						},
+						"description": "Actualizar datos de una persona por su id.\n- Identificación (Solo números, máximo 10 dígitos)\n- Nombre (Solo letras, máximo 20 caracteres)\n- Apellido (Solo letras, máximo 20 caracteres)\n- Edad (Solo números, máximo 2 dígitos)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/person/0123456789",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"person",
+								"0123456789"
+							]
+						},
+						"description": "Eliminar datos de una persona por su id."
+					},
+					"response": []
+				}
+			],
+			"description": "Personas que han hecho solicitudes de ingreso a Hogwarts. Que una persona esté regisrtrada es requisito para que esta pueda poseer una solicitud de ingreso."
+		},
+		{
+			"name": "House",
+			"item": [
+				{
+					"name": "Create Gryffindor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Gryffindor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/house",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house"
+							]
+						},
+						"description": "Insertar nueva casa."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Hufflepuff",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Hufflepuff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/house",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house"
+							]
+						},
+						"description": "Insertar nueva casa."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Ravenclaw",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ravenclaw\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/house",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house"
+							]
+						},
+						"description": "Insertar nueva casa."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Slytherin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Slytherin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/house",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house"
+							]
+						},
+						"description": "Insertar nueva casa."
+					},
+					"response": []
+				},
+				{
+					"name": "Read houses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/house",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house"
+							]
+						},
+						"description": "Obtener listado de las casas."
+					},
+					"response": []
+				},
+				{
+					"name": "Read house",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/house/Gryffindor",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house",
+								"Gryffindor"
+							]
+						},
+						"description": "Obtener casa por su id."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete house",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/house/Gryffindor",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"house",
+								"Gryffindor"
+							]
+						},
+						"description": "Borrar casa por su nombre."
+					},
+					"response": []
+				}
+			],
+			"description": "Casas del Colegio de Magia y Hechicería Hogwarts."
+		},
+		{
+			"name": "Applications",
+			"item": [
+				{
+					"name": "Create application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"personId\": \"0123456789\",\r\n    \"aspiredHouse\": \"Gryffindor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/application",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"application"
+							]
+						},
+						"description": "Insertar nueva solicitud. Los datos del aspirante y la casa deben estar previamente registrados."
+					},
+					"response": []
+				},
+				{
+					"name": "Read applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"application_id\");\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"application_id\", jsonData.data[0].applicationId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/application/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"application",
+								""
+							]
+						},
+						"description": "Obtener listado de solicitudes."
+					},
+					"response": []
+				},
+				{
+					"name": "Read application by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/application/{{application_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"application",
+								"{{application_id}}"
+							]
+						},
+						"description": "Obtener solicitud por su id."
+					},
+					"response": []
+				},
+				{
+					"name": "Update application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationId\": {{application_id}},\r\n    \"personId\": \"0123456789\",\r\n    \"aspiredHouse\": \"Hufflepuff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/application/{{application_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"application",
+								"{{application_id}}"
+							]
+						},
+						"description": "Actualizar solicitud por su id."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/application/{{application_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"application",
+								"{{application_id}}"
+							]
+						},
+						"description": "Eliminar solicitud por su id."
+					},
+					"response": []
+				}
+			],
+			"description": "Solicitudes de ingreso hechas por las personas previamente registradas."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://localhost:44371"
+		},
+		{
+			"key": "application_id",
+			"value": ""
+		}
+	]
+}

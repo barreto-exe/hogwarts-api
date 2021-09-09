@@ -33,16 +33,25 @@ namespace hogwarts_api.Controllers
         {
             var houses = await houseRepository.GetHouses();
             var housesDto = mapper.Map<IEnumerable<HouseDto>>(houses);
-            return Ok(housesDto);
+
+            response.Data = housesDto;
+            return Ok(response);
         }
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetHouse(string name)
         {
             var house = await houseRepository.GetHouse(name);
-            var houseDto = mapper.Map<HouseDto>(house);
+            if (house == null)
+            {
+                response.Message = "La casa no fue encontrada.";
+                return BadRequest(response);
+            }
 
-            return Ok(houseDto);
+            var houseDto = mapper.Map<HouseDto>(house);
+            response.Data = houseDto;
+            response.Message = "Casa encontrada.";
+            return Ok(response);
         }
 
         public async Task<IActionResult> InsertHouse(HouseDto houseDto)

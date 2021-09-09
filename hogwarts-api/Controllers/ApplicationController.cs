@@ -33,16 +33,24 @@ namespace hogwarts_api.Controllers
             var applications = await applicationRepository.GetApplications();
             var applicationsDto = mapper.Map<IEnumerable<ApplicationDto>>(applications);
 
-            return Ok(applicationsDto);
+            response.Data = applicationsDto;
+            return Ok(response);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetApplication(int id)
         {
             var application = await applicationRepository.GetApplication(id);
-            var applicationDto = mapper.Map<ApplicationDto>(application);
+            if (application == null)
+            {
+                response.Message = "La solicitud no fue encontrada.";
+                return BadRequest(response);
+            }
 
-            return Ok(applicationDto);
+            var applicationDto = mapper.Map<ApplicationDto>(application);
+            response.Data = applicationDto;
+            response.Message = "Solicitud encontrada.";
+            return Ok(response);
         }
 
         [HttpPost]
