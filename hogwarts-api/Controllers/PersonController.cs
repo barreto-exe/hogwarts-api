@@ -61,6 +61,7 @@ namespace hogwarts_api.Controllers
             try
             {
                 await unitOfWork.PersonRepository.Add(person);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -81,25 +82,12 @@ namespace hogwarts_api.Controllers
             person.PersonId = id; //Forzar que Dto tenga el mismo id
             try
             {
-                bool updated = await unitOfWork.PersonRepository.Update(person);
+                unitOfWork.PersonRepository.Update(person);
+                await unitOfWork.SaveChangesAsync();
 
-                string message;
-                dynamic httpResult; //Variable de respuesta http
-
-                if (updated)
-                {
-                    message = "Actualización completada.";
-                    httpResult = Ok(response);
-                }
-                else
-                {
-                    message = "Actualización fallida. No hubo cambios, o el id no existe.";
-                    httpResult = BadRequest(response);
-                }
-
-                response.Message = message;
-                response.Data = updated;
-                return httpResult;
+                response.Data = false;
+                response.Message = "Actualización completada.";
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -114,24 +102,12 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                bool deleted = await unitOfWork.PersonRepository.Delete(id);
-                string message;
-                dynamic httpResult; //Variable de respuesta http
+                await unitOfWork.PersonRepository.Delete(id);
+                await unitOfWork.SaveChangesAsync();
 
-                if (deleted)
-                {
-                    message = "Borrado completado.";
-                    httpResult = Ok(response);
-                }
-                else
-                {
-                    message = "Borrado fallido. El id no existe.";
-                    httpResult = BadRequest(response);
-                }
-
-                response.Message = message;
-                response.Data = deleted;
-                return httpResult;
+                response.Data = false;
+                response.Message = "Borrado completado.";
+                return Ok(response);
             }
             catch (Exception ex)
             {

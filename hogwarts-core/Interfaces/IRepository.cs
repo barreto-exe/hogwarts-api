@@ -10,8 +10,8 @@ namespace hogwarts_core.Interfaces
     {
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(object id);
-        Task<bool> Add(T item);
-        Task<bool> Update(T item);
-        Task<bool> Delete(object id);
+        Task Add(T item);
+        void Update(T item);
+        Task Delete(object id);
     }
 }

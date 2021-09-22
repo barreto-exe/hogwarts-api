@@ -30,29 +30,20 @@ namespace hogwarts_infrastructure.Repositories
             return await entities.FindAsync(id);
         }
 
-        public async Task<bool> Add(T item)
+        public async Task Add(T item)
         {
-            entities.Add(item);
-            int result = await hogwartsContext.SaveChangesAsync();
-            return result > 0;
+            await entities.AddAsync(item);
         }
 
-        public async Task<bool> Update(T item)
+        public void Update(T item)
         {
             entities.Update(item);
-            int result = await hogwartsContext.SaveChangesAsync();
-            return result > 0;
         }
 
-        public async Task<bool> Delete(object id)
+        public async Task Delete(object id)
         {
             var currentEntity = await GetById(id);
-            if (currentEntity == null) return false;
-
             entities.Remove(currentEntity);
-
-            int rows = await hogwartsContext.SaveChangesAsync();
-            return rows > 0;
         }
     }
 }

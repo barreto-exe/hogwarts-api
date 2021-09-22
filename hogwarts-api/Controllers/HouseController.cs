@@ -60,6 +60,7 @@ namespace hogwarts_api.Controllers
             try
             {
                 await unitOfWork.HouseRepository.Add(house);
+                await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -78,24 +79,12 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                bool deleted = await unitOfWork.HouseRepository.Delete(name);
-                string message;
-                dynamic httpResult; //Variable de respuesta http
+                await unitOfWork.HouseRepository.Delete(name);
+                await unitOfWork.SaveChangesAsync();
 
-                if (deleted)
-                {
-                    message = "Borrado completado.";
-                    httpResult = Ok(response);
-                }
-                else
-                {
-                    message = "Borrado fallido. El id no existe.";
-                    httpResult = BadRequest(response);
-                }
-
-                response.Message = message;
-                response.Data = deleted;
-                return httpResult;
+                response.Data = false;
+                response.Message = "Borrado completado.";
+                return Ok(response);
             }
             catch (Exception ex)
             {
