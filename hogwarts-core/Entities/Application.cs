@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace hogwarts_core.Entities
 {
-    public partial class Application
+    public partial class Application : BaseEntity
     {
         public int ApplicationId { get; set; }
         public string PersonId { get; set; }

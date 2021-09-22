@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace hogwarts_core.Entities
 {
-    public partial class House
+    public partial class House : BaseEntity
     {
         public House()
         {
