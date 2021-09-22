@@ -16,11 +16,11 @@ namespace hogwarts_api.Controllers
     [ApiController]
     public class ApplicationController : ControllerBase
     {
-        private readonly IApplicationRepository applicationRepository;
+        private readonly IRepository<Application> applicationRepository;
         private readonly IMapper mapper;
         private readonly ApiResponse response;
 
-        public ApplicationController(IApplicationRepository applicationRepository, IMapper mapper, ApiResponse response)
+        public ApplicationController(IRepository<Application> applicationRepository, IMapper mapper, ApiResponse response)
         {
             this.applicationRepository = applicationRepository;
             this.mapper = mapper;
@@ -30,7 +30,7 @@ namespace hogwarts_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetApplications()
         {
-            var applications = await applicationRepository.GetApplications();
+            var applications = await applicationRepository.GetAll();
             var applicationsDto = mapper.Map<IEnumerable<ApplicationDto>>(applications);
 
             response.Data = applicationsDto;
@@ -40,7 +40,7 @@ namespace hogwarts_api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetApplication(int id)
         {
-            var application = await applicationRepository.GetApplication(id);
+            var application = await applicationRepository.GetById(id);
             if (application == null)
             {
                 response.Message = "La solicitud no fue encontrada.";
@@ -59,7 +59,7 @@ namespace hogwarts_api.Controllers
             var application = mapper.Map<Application>(applicationDto);
             try
             {
-                await applicationRepository.InsertApplication(application);
+                await applicationRepository.Add(application);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace hogwarts_api.Controllers
             application.ApplicationId = id; //Forzar que Dto tenga el mismo id
             try
             {
-                bool updated = await applicationRepository.UpdateApplication(application);
+                bool updated = await applicationRepository.Update(application);
 
                 string message;
                 dynamic httpResult; //Variable de respuesta http
@@ -113,7 +113,7 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                bool deleted = await applicationRepository.DeleteApplication(id);
+                bool deleted = await applicationRepository.Delete(id);
                 string message;
                 dynamic httpResult; //Variable de respuesta http
 

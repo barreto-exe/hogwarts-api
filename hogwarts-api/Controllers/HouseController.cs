@@ -17,11 +17,11 @@ namespace hogwarts_api.Controllers
     [ApiController]
     public class HouseController : ControllerBase
     {
-        private readonly IHouseRepository houseRepository;
+        private readonly IRepository<House> houseRepository;
         private readonly IMapper mapper;
         private readonly ApiResponse response;
 
-        public HouseController(IHouseRepository houseRepository, IMapper mapper, ApiResponse response)
+        public HouseController(IRepository<House> houseRepository, IMapper mapper, ApiResponse response)
         {
             this.houseRepository = houseRepository;
             this.mapper = mapper;
@@ -31,7 +31,7 @@ namespace hogwarts_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHouses()
         {
-            var houses = await houseRepository.GetHouses();
+            var houses = await houseRepository.GetAll();
             var housesDto = mapper.Map<IEnumerable<HouseDto>>(houses);
 
             response.Data = housesDto;
@@ -41,7 +41,7 @@ namespace hogwarts_api.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> GetHouse(string name)
         {
-            var house = await houseRepository.GetHouse(name);
+            var house = await houseRepository.GetById(name);
             if (house == null)
             {
                 response.Message = "La casa no fue encontrada.";
@@ -60,7 +60,7 @@ namespace hogwarts_api.Controllers
 
             try
             {
-                await houseRepository.InsertHouse(house);
+                await houseRepository.Add(house);
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                bool deleted = await houseRepository.DeleteHouse(name);
+                bool deleted = await houseRepository.Delete(name);
                 string message;
                 dynamic httpResult; //Variable de respuesta http
 

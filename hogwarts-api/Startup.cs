@@ -32,10 +32,9 @@ namespace hogwarts_api
             //Contexto de BD
             services.AddDbContext<HogwartsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HogwartsPgsql")));
 
-            //Servicios de repositorios
-            services.AddTransient<IPersonRepository, PersonRepository>();
-            services.AddTransient<IHouseRepository, HouseRepository>();
-            services.AddTransient<IApplicationRepository, ApplicationRepository>();
+            //Repositorios genéricos
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+
             services.AddTransient<ApiResponse>();
         }
 

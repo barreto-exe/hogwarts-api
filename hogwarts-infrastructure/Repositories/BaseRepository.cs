@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace hogwarts_infrastructure.Repositories
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly HogwartsContext hogwartsContext;
         private readonly DbSet<T> entities;
-        protected BaseRepository(HogwartsContext hogwartsContext)
+        public BaseRepository(HogwartsContext hogwartsContext)
         {
             this.hogwartsContext = hogwartsContext;
             this.entities = hogwartsContext.Set<T>();
         }
 
 
-        public async Task<IEnumerable<T>> GetAll(object id)
+        public async Task<IEnumerable<T>> GetAll()
         {
             return await entities.ToListAsync();
         }

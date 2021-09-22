@@ -8,7 +8,7 @@ namespace hogwarts_core.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task<IEnumerable<T>> GetAll(object id);
+        Task<IEnumerable<T>> GetAll();
         Task<T> GetById(object id);
         Task<bool> Add(T item);
         Task<bool> Update(T item);
