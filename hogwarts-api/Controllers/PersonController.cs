@@ -17,13 +17,12 @@ namespace hogwarts_api.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private readonly IRepository<Person> personRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly ApiResponse response;
-
-        public PersonController(IRepository<Person> personRepository, IMapper mapper, ApiResponse response)
+        public PersonController(IUnitOfWork unitOfWork, IMapper mapper, ApiResponse response)
         {
-            this.personRepository = personRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.response = response;
         }
@@ -31,7 +30,7 @@ namespace hogwarts_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPeople()
         {
-            var people = await personRepository.GetAll();
+            var people = await unitOfWork.PersonRepository.GetAll();
             var peopleDto = mapper.Map<IEnumerable<PersonDto>>(people);
 
             response.Data = peopleDto;
@@ -41,7 +40,7 @@ namespace hogwarts_api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPerson(string id)
         {
-            var person = await personRepository.GetById(id);
+            var person = await unitOfWork.PersonRepository.GetById(id);
             if (person == null)
             {
                 response.Message = "La persona no fue encontrada.";
@@ -61,7 +60,7 @@ namespace hogwarts_api.Controllers
 
             try
             {
-                await personRepository.Add(person);
+                await unitOfWork.PersonRepository.Add(person);
             }
             catch (Exception ex)
             {
@@ -82,7 +81,7 @@ namespace hogwarts_api.Controllers
             person.PersonId = id; //Forzar que Dto tenga el mismo id
             try
             {
-                bool updated = await personRepository.Update(person);
+                bool updated = await unitOfWork.PersonRepository.Update(person);
 
                 string message;
                 dynamic httpResult; //Variable de respuesta http
@@ -115,7 +114,7 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                bool deleted = await personRepository.Delete(id);
+                bool deleted = await unitOfWork.PersonRepository.Delete(id);
                 string message;
                 dynamic httpResult; //Variable de respuesta http
 

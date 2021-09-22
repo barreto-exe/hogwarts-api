@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using hogwarts_core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;

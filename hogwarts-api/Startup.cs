@@ -35,6 +35,8 @@ namespace hogwarts_api
             //Repositorios genéricos
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
 
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             services.AddTransient<ApiResponse>();
         }
 

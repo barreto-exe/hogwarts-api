@@ -17,13 +17,12 @@ namespace hogwarts_api.Controllers
     [ApiController]
     public class HouseController : ControllerBase
     {
-        private readonly IRepository<House> houseRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly ApiResponse response;
-
-        public HouseController(IRepository<House> houseRepository, IMapper mapper, ApiResponse response)
+        public HouseController(IUnitOfWork unitOfWork, IMapper mapper, ApiResponse response)
         {
-            this.houseRepository = houseRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.response = response;
         }
@@ -31,7 +30,7 @@ namespace hogwarts_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHouses()
         {
-            var houses = await houseRepository.GetAll();
+            var houses = await unitOfWork.HouseRepository.GetAll();
             var housesDto = mapper.Map<IEnumerable<HouseDto>>(houses);
 
             response.Data = housesDto;
@@ -41,7 +40,7 @@ namespace hogwarts_api.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> GetHouse(string name)
         {
-            var house = await houseRepository.GetById(name);
+            var house = await unitOfWork.HouseRepository.GetById(name);
             if (house == null)
             {
                 response.Message = "La casa no fue encontrada.";
@@ -60,7 +59,7 @@ namespace hogwarts_api.Controllers
 
             try
             {
-                await houseRepository.Add(house);
+                await unitOfWork.HouseRepository.Add(house);
             }
             catch (Exception ex)
             {
@@ -79,7 +78,7 @@ namespace hogwarts_api.Controllers
         {
             try
             {
-                bool deleted = await houseRepository.Delete(name);
+                bool deleted = await unitOfWork.HouseRepository.Delete(name);
                 string message;
                 dynamic httpResult; //Variable de respuesta http
 
