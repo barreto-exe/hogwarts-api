@@ -32,7 +32,6 @@ namespace hogwarts_api.Controllers
         {
             var houses = await unitOfWork.HouseRepository.GetAll();
             var housesDto = mapper.Map<IEnumerable<HouseDto>>(houses);
-
             response.Data = housesDto;
             return Ok(response);
         }
@@ -64,12 +63,12 @@ namespace hogwarts_api.Controllers
             }
             catch (Exception ex)
             {
-                response.Data = false;
                 response.Message = "Inserción fallida. " + ex.InnerException.Message;
                 return BadRequest(response);
             }
 
-            response.Data = true;
+            houseDto = mapper.Map<HouseDto>(house);
+            response.Data = houseDto;
             response.Message = "Inserción completada.";
             return Ok(response);
         }
@@ -82,7 +81,7 @@ namespace hogwarts_api.Controllers
                 await unitOfWork.HouseRepository.Delete(name);
                 await unitOfWork.SaveChangesAsync();
 
-                response.Data = false;
+                response.Data = true;
                 response.Message = "Borrado completado.";
                 return Ok(response);
             }

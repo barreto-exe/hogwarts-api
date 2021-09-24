@@ -65,12 +65,12 @@ namespace hogwarts_api.Controllers
             }
             catch (Exception ex)
             {
-                response.Data = false;
                 response.Message = "Inserción fallida. " + ex.InnerException.Message;
                 return BadRequest(response);
             }
 
-            response.Data = true;
+            personDto = mapper.Map<PersonDto>(person);
+            response.Data = personDto;
             response.Message = "Inserción completada.";
             return Ok(response);
         }
@@ -85,13 +85,13 @@ namespace hogwarts_api.Controllers
                 unitOfWork.PersonRepository.Update(person);
                 await unitOfWork.SaveChangesAsync();
 
-                response.Data = false;
+                personDto = mapper.Map<PersonDto>(person);
+                response.Data = personDto;
                 response.Message = "Actualización completada.";
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                response.Data = false;
                 response.Message = "Actualización fallida. " + ex.InnerException.Message;
                 return BadRequest(response);
             }
@@ -105,7 +105,7 @@ namespace hogwarts_api.Controllers
                 await unitOfWork.PersonRepository.Delete(id);
                 await unitOfWork.SaveChangesAsync();
 
-                response.Data = false;
+                response.Data = true;
                 response.Message = "Borrado completado.";
                 return Ok(response);
             }

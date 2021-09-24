@@ -31,7 +31,6 @@ namespace hogwarts_api.Controllers
         {
             var applications = await unitOfWork.ApplicationRepository.GetAll();
             var applicationsDto = mapper.Map<IEnumerable<ApplicationDto>>(applications);
-
             response.Data = applicationsDto;
             return Ok(response);
         }
@@ -63,12 +62,12 @@ namespace hogwarts_api.Controllers
             }
             catch (Exception ex)
             {
-                response.Data = false;
                 response.Message = "Inserción fallida. " + ex.InnerException.Message;
                 return BadRequest(response);
             }
 
-            response.Data = true;
+            applicationDto = mapper.Map<ApplicationDto>(application);
+            response.Data = applicationDto;
             response.Message = "Inserción completada.";
             return Ok(response);
         }
@@ -83,13 +82,13 @@ namespace hogwarts_api.Controllers
                 unitOfWork.ApplicationRepository.Update(application);
                 await unitOfWork.SaveChangesAsync();
 
-                response.Data = true;
+                applicationDto = mapper.Map<ApplicationDto>(application);
+                response.Data = applicationDto;
                 response.Message = "Actualización completada.";
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                response.Data = false;
                 response.Message = "Actualización fallida. " + ex.InnerException.Message;
                 return BadRequest(response);
             }
